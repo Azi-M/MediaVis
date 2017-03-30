@@ -135,7 +135,7 @@ function addLegend() {
     var onmouseOverTag=gr
         .append("text").attr("id","ThemonoCircle")
         .attr("x",-165)
-        .attr("y",318)
+        .attr("y",322)
         .text(" ")
         .attr("style","fill:darkgray;font-family: Menlo;font-weight: bolder;font-size: 11px");
 
