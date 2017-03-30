@@ -6,6 +6,9 @@ var LeavesTansitionSpeed = 300;
 var blinkColor1 = "#ffffff";
 var blinkColor2 = "gainsboro";
 
+var completed=0;
+
+
 var iBranch = 0;
 var height = 800,
     width = 1500;
@@ -687,6 +690,7 @@ function mainRun() {
     }, CUURENT_time);
     setTimeout(function () {
         addCirclesAtEnd();
+        completed=1;
     }, CUURENT_time);
     setTimeout(function () {
         branches();
@@ -810,46 +814,50 @@ function branches() {
             })
             .on("mouseover", function (d) {
                 var circleUnderMouse = this.id;
+                if(completed==1) {
+                    d3.selectAll('.Leaves').filter(function (b, i) {
+                        return (this.id !== circleUnderMouse);
+                    }).style("opacity", ".1");
 
-                d3.selectAll('.Leaves').filter(function (b, i) {
-                    return (this.id !== circleUnderMouse);
-                }).style("opacity", ".1");
-
-                d3.selectAll('.DoubleRing').filter(function (b, i) {
-                    return (this.id !== circleUnderMouse);
-                }).style("opacity", ".1");
-
-
-                div.transition()
-                    .duration(200)
-                    .style("opacity", .9);
+                    d3.selectAll('.DoubleRing').filter(function (b, i) {
+                        return (this.id !== circleUnderMouse);
+                    }).style("opacity", ".1");
 
 
-                div.html("<div id='pannel'>" +
-                    "I " + MediaType[d.MediaType] + "<br>" + What[d.What] + "<br>" + Duration[d.Duration] + "<br>" + SentTo[d.SentTo] + "</div>")
-                    .style("left", 73 + "px")
-                    .style("top", 445 + "px")
-                    .style("opacity", ".1")
-                    // .attr("class","C"+d.MediaType+"_"+d.Click)
-                    .transition()
-                    .duration(1000)
-                    .style("opacity", "1");
+                    div.transition()
+                        .duration(200)
+                        .style("opacity", .9);
 
+
+                    div.html("<div id='pannel'>" +
+                        "I " + MediaType[d.MediaType] + "<br>" + What[d.What] + "<br>" + Duration[d.Duration] + "<br>" + SentTo[d.SentTo] + "</div>")
+                        .style("left", 73 + "px")
+                        .style("top", 445 + "px")
+                        .style("opacity", ".1")
+                        // .attr("class","C"+d.MediaType+"_"+d.Click)
+                        .transition()
+                        .duration(1000)
+                        .style("opacity", "1");
+                }
 
             })
             .on("mouseout", function (d) {
-                var SelectedLeaves = d3.selectAll('*')
-                    .transition()
-                    .duration(300)
-                    .style('opacity', function (b) {
-                        return 1;
-                    });
-                var a = d3.select('#pannel')
-                    .transition()
-                    .duration(400)
-                    .style("opacity", "0");
-                var opacs = d3.selectAll(".Leaves")
-                    .style('fill-opacity', 1);
+                if(completed==1) {
+                    var SelectedLeaves = d3.selectAll('*')
+                        .transition()
+                        .duration(300)
+                        .style('opacity', function (b) {
+                            return 1;
+                        });
+                    var a = d3.select('#pannel')
+                        .transition()
+                        .duration(400)
+                        .style("opacity", "0");
+                    var opacs = d3.selectAll(".Leaves")
+                        .style('fill-opacity', 1);
+
+                }
+
             })
             .attr('cx', function (d, i) {
                 if (d.Click == 1) {
@@ -926,19 +934,22 @@ function branches() {
                 return "dot" + d.What + " Leaves";
             })
             .on("mouseover", function (d) {
-
-                var circleUnderMouse = this.id;
-                d3.selectAll('.Leaves').filter(function (b, i) {
-                    return (this.id !== circleUnderMouse);
-                }).style("opacity", ".1");
+                if(completed==1) {
+                    var circleUnderMouse = this.id;
+                    d3.selectAll('.Leaves').filter(function (b, i) {
+                        return (this.id !== circleUnderMouse);
+                    }).style("opacity", ".1");
+                }
             })
             .on("mouseout", function (d) {
-                var SelectedLeaves = d3.selectAll('*')
-                    .transition()
-                    .duration(300)
-                    .style('opacity', function (b) {
-                        return 1;
-                    });
+                if(completed==1) {
+                    var SelectedLeaves = d3.selectAll('*')
+                        .transition()
+                        .duration(300)
+                        .style('opacity', function (b) {
+                            return 1;
+                        });
+                }
             })
             .transition()
             .duration(LeavesTansitionSpeed)
