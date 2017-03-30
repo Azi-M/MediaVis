@@ -3,6 +3,12 @@ var timeSpan = 2700;
 var delayFactor = 900;
 var LeavesTansitionSpeed = 300;
 
+var outerWidth = document.getElementById('canvas').clientWidth;
+var outerHeight = document.getElementById('canvas').clientHeight;
+
+console.log(outerWidth);
+console.log(outerHeight);
+
 var blinkColor1 = "#ffffff";
 var blinkColor2 = "gainsboro";
 
@@ -10,11 +16,13 @@ var completed=0;
 
 
 var iBranch = 0;
-var height = 800,
-    width = 1500;
-var div = d3.select("body").append("div") // Define the div for the tooltip
+//var height = 800,
+//    width = 1200;
+/*var div = d3.select("body").append("div") // Define the div for the tooltip
     .attr("class", "tooltip")
     .style("opacity", 0);
+*/
+
 var audio = new Audio();
 var monoCircles=["null", "Relationship", "Business Strategies", "Child Free",  "Social Media", "Team Management", "New York", "Self Improvements", "General Design", "Habits", "Visual Perception", "Book Reviews", "Dataviz", "Etiquettes"];
 var MediaType = ["null", "was online", "watched video", "listened to podcast", " read paper & magazine"];
@@ -24,35 +32,122 @@ var Click = ["null", "So much clicked with me", "Just ok", "Did not finish"];
 var SentTo = ["", "sent to a friend", "sent to boy friend", "sent to coworkers"];
 var ReceivedFrom = ["", "received from you", "received from person you know", "received from boy friend", "received from friend"];
 var AH = 300, AW = 200;  //in case the screen is not set correctly
-var main = d3.select('.canvas')
+
+
+var totalScale=1;
+var chartDiv = document.getElementById("canvas");
+
+var main = d3.select(chartDiv)
+    .classed("svg-container", true)
     .append('svg')
-    .attr('width', width)
-    .attr('height', height)
-    .append("g")
-    .attr("transform", "scale(1) translate(" + 180 + "," + 0 + ")");
+    //responsive SVG needs these 2 attributes and no width and height attr
+    .attr("preserveAspectRatio", "xMinYMin meet")
+    .attr("viewBox", "-200 0 1200 1400")
+    //class to make it responsive
+    .classed("svg-content-responsive", true)
+    .attr("transform", "scale("+totalScale+") translate(" + 0 + "," + 60 + ")");
+
+
 var gr = main.append('g')
     .attr('transform', 'translate(' + 0 + ',' + 0 + ')');
+
 var legend_layer = main.append('g')
-    .attr('transform', 'translate(' + 75 + ',' + 0 + ')');
+    .attr('transform', 'translate(' + 75 + ',' + 25 + ')');
+
+var myToolTip1=gr
+    .append("text")
+    .attr("id","toolTip1")
+    .attr("x",-165)
+    .attr("y",340);
+var myToolTip2=gr
+    .append("text")
+    .attr("id","toolTip2")
+    .attr("x",-165)
+    .attr("y",355);
+var myToolTip3=gr
+    .append("text")
+    .attr("id","toolTip3")
+    .attr("x",-165)
+    .attr("y",370);
+var myToolTip4=gr
+    .append("text")
+    .attr("id","toolTip4")
+    .attr("x",-165)
+    .attr("y",385);
+
+
+
 mainRun();
 addLegend();
-var legends;
+
+
+function redraw(){
+
+    // Extract the width and height that was computed by CSS.
+    var width = chartDiv.clientWidth;
+    var height = chartDiv.clientHeight;
+
+    // Use the extracted size to set the size of an SVG element.
+    main
+        .attr("width", width)
+        .attr("height", height);
+}
+redraw();
+window.addEventListener("resize", redraw);
 
 
 function showtitle(id) {
-
-var monocircle=d3.select("#monoCircles")
+var monocircle=d3.selectAll("#ThemonoCircle")
     .text(monoCircles[id]);
 }
 
 function clearTitle() {
-    var monocircle=d3.select("#monoCircles")
+    var monocircle=d3.selectAll("#ThemonoCircle")
         .text("");
 }
 
 function addLegend() {
+
+
+    var writing1=gr
+        .append("text")
+        .attr("x",-165)
+        .attr("y",40)
+        .text("AZAM MAJOONI | NEU | 2017")
+        .attr("fill","#8b9fb0")
+        .attr("style","font-weight:100; font-family: sans-serif;font-size: 12px");
+
+    var writing2=gr
+        .append("text")
+        .attr("x",-165)
+        .attr("y",22)
+        .text("MEDIA VIS")
+        .attr("fill","#8b9fb0")
+        .attr("style","font-weight: bold; font-family: 'Times New Roman';font-size: 30.5px");
+
+    var writing3=gr
+        .append("text")
+        .attr("x",-165)
+        .attr("y",303)
+        .text("The Topic of Readings")
+        .attr("fill","#325093");
+
+    var onmouseOverTag=gr
+        .append("text").attr("id","ThemonoCircle")
+        .attr("x",-165)
+        .attr("y",318)
+        .text(" ")
+        .attr("style","fill:darkgray;font-family: Menlo;font-weight: bolder;font-size: 11px");
+
+
+
+
+
+
     var LegendData1 = ["Online article", "Video", "Listening to podcast", "Paper & magazine"];
     var LegendData2 = ["While relaxing", "When waiting", "While walking", "When relaxed after work", "When supposed to work", "While indulging in bed"];
+
+
     var legends = legend_layer.selectAll('.Legends1')
         .data(LegendData1)
         .enter()
@@ -60,10 +155,12 @@ function addLegend() {
         .attr('id', function (d) {
             return "legendData1_" + d['index'];
         });
+
+    //Topic of Readings
     circles = legends
         .append('circle')
         .attr('cx', function (d, i) {
-            return -240;
+            return -235;
         })
         .attr('cy', function (d, i) {
             return 60 + i * 20;
@@ -106,7 +203,7 @@ function addLegend() {
     circles = legends
         .append('circle')
         .attr('cx', function (d, i) {
-            return -242;
+            return -236;
         })
         .attr('cy', function (d, i) {
             return 145 + i * 20;
@@ -124,7 +221,7 @@ function addLegend() {
     legends
         .append("text")
         .attr("dx", function (d, i) {
-            return -230;
+            return -228;
         })
         .attr("dy", function (d, i) {
             return 147 + i * 20;
@@ -141,10 +238,15 @@ function addLegend() {
         .exit();
 }
 
+
 function mainRun() {
     var delay = d3.scaleLinear()
         .domain([3, 7])
         .range([1000, 2000]);
+
+
+
+
     var S = [0, 0, delay(5), delay(7), delay(3), delay(3), delay(6), delay(5), delay(7), delay(5), delay(4), delay(2), delay(2), delay(3), delay(3)]
     var CUURENT_time = (timeSpan);
     //Phase 0: show horizontal line
@@ -826,12 +928,36 @@ function branches() {
                     }).style("opacity", ".1");
 
 
-                    div.transition()
+                    myToolTip1
+                        .attr("style","fill:#325093;font-family: sans-serif;font-size: 13px")
+                        .text("I " + MediaType[d.MediaType])
+                        .style("opacity",0)
+                        .transition()
                         .duration(200)
-                        .style("opacity", .9);
-
-
-                    div.html("<div id='pannel'>" +
+                        .style("opacity","1");
+                    myToolTip2
+                        .attr("style","fill:#325093;font-family: sans-serif;font-size: 13px")
+                        .text(What[d.What])
+                        .style("opacity",0)
+                        .transition()
+                        .duration(500)
+                        .style("opacity","1");
+                    myToolTip3
+                        .attr("style","fill:#325093;font-family: sans-serif;font-size: 13px")
+                        .text(Duration[d.Duration])
+                        .style("opacity",0)
+                        .transition()
+                        .duration(700)
+                        .style("opacity","1");
+                    myToolTip4
+                        .attr("style","fill:#325093;font-family: sans-serif;font-size: 13px")
+                        .text(SentTo[d.SentTo])
+                        .style("opacity",0)
+                        .transition()
+                        .duration(1000)
+                        .style("opacity","1");
+                        /*.append('g')
+                        .html("<div id='pannel'>" +
                         "I " + MediaType[d.MediaType] + "<br>" + What[d.What] + "<br>" + Duration[d.Duration] + "<br>" + SentTo[d.SentTo] + "</div>")
                         .style("left", 73 + "px")
                         .style("top", 445 + "px")
@@ -840,11 +966,16 @@ function branches() {
                         .transition()
                         .duration(1000)
                         .style("opacity", "1");
+                        */
                 }
 
             })
             .on("mouseout", function (d) {
+
+
+
                 if(completed==1) {
+
                     var SelectedLeaves = d3.selectAll('*')
                         .transition()
                         .duration(300)
@@ -859,6 +990,25 @@ function branches() {
                         .style('fill-opacity', 1);
 
                 }
+
+                myToolTip1
+                    .transition()
+                    .duration(1000)
+                    .style("opacity","0");
+
+                myToolTip2
+                    .transition()
+                    .duration(700)
+                    .style("opacity","0");
+                myToolTip3
+                    .transition()
+                    .duration(300)
+                    .style("opacity","0");
+                myToolTip4
+                    .transition()
+                    .duration(200)
+                    .style("opacity","0");
+
 
             })
             .attr('cx', function (d, i) {
