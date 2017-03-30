@@ -1,3 +1,52 @@
+
+    /* Make the chart container fill the page using CSS. */
+#canvas {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+}
+
+    .svg-container {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+        padding-bottom: 100%; /* aspect ratio */
+        vertical-align: top;
+        overflow: hidden;
+    }
+    .svg-content-responsive {
+        display: inline-block;
+        position: absolute;
+        top: 10px;
+        left: 0;
+    }
+
+
+    /*
+    only for DIV
+     */
+    .aspectwrapper {
+        display: inline-block; /* shrink to fit */
+        width: 100%;           /* whatever width you like */
+        position: relative;    /* so .content can use position: absolute */
+    }
+    .aspectwrapper::after {
+        padding-top: 56.25%; /* percentage of containing block _width_ */
+        display: block;
+        content: '';
+    }
+    .content {
+        position: absolute;
+        top: 0; bottom: 0; right: 0; left: 0;  /* follow the parent's edges */
+        outline: thin dashed green;            /* just so you can see the box */
+    }
+    /*
+    end here
+     */
+
+
 .typewrite {
     font-size: 14px;
     font-family: Menlo;
@@ -5,6 +54,7 @@
     margin-top: 100px;
     margin-bottom: 50px;
     color: #325093;
+
     /* width: 200px;
      height: 50px;
  */
