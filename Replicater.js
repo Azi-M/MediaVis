@@ -29,9 +29,11 @@ var main = d3.select('.canvas')
     .attr('width', width)
     .attr('height', height)
     .append("g")
-    .attr("transform", "scale(1) translate(" + 250 + "," + 0 + ")");
+    .attr("transform", "scale(1) translate(" + 180 + "," + 0 + ")");
 var gr = main.append('g')
     .attr('transform', 'translate(' + 0 + ',' + 0 + ')');
+var legend_layer = main.append('g')
+    .attr('transform', 'translate(' + 75 + ',' + 0 + ')');
 mainRun();
 addLegend();
 var legends;
@@ -51,7 +53,7 @@ function clearTitle() {
 function addLegend() {
     var LegendData1 = ["Online article", "Video", "Listening to podcast", "Paper & magazine"];
     var LegendData2 = ["While relaxing", "When waiting", "While walking", "When relaxed after work", "When supposed to work", "While indulging in bed"];
-    var legends = gr.selectAll('.Legends1')
+    var legends = legend_layer.selectAll('.Legends1')
         .data(LegendData1)
         .enter()
         .append('g')
@@ -94,7 +96,7 @@ function addLegend() {
             return "l" + (i + 1)
         })
         .exit();
-    legends = gr.selectAll('.Legends2')
+    legends = legend_layer.selectAll('.Legends2')
         .data(LegendData2)
         .enter()
         .append('g')
