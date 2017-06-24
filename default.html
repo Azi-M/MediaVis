@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<script src="bin/d3.v4.min.js"></script>
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>MediaVis</title>
+
+
+    <link rel="stylesheet" href="Style.css">
+    <script src="textEffect.js"></script>
+    <script src="store.js"></script>
+
+
+</head>
+<body>
+
+<div class="aspectwrapper" >
+    <div> <p class="anim-typewriter  line-1">
+        <b>What I read, watched and listened in one week</b>
+    </p>
+    </div>
+    <div style="color: darkgray;font-family: Arcon;font-size: 12px; float: right;" class="line-2">
+        Data collected from Dear Data, week 27 Georgia Lupe's postcard.
+    </div>
+</div>
+
+
+
+
+
+
+
+<style>
+
+    /* Global */
+    html{
+        min-height: 100%;
+        overflow: hidden;
+    }
+    body{
+        height: calc(100vh - 8em);
+        padding: 4em;
+        color: #325093;
+        font-family: 'Menlo', monospace;
+        font-size: 14px;
+        background-color: #f8f8f8;
+    }
+    .line-1{
+        position: relative;
+        float: right;
+        width: 35em;
+        margin-right: 10%;
+        border-right: 2px solid rgba(255,255,255,.75);
+        font-size: 100%;
+        text-align: right;
+        white-space: nowrap;
+        overflow: hidden;
+        transform: translateY(-50%);
+    }
+    .line-2{
+        position: absolute;
+        right: 0;
+        top:30px;
+        width: 35em;
+        margin-right: 10%;
+        border-right: 2px solid rgba(255,255,255,.75);
+        font-size: 100%;
+        text-align: right;
+        white-space: nowrap;
+        overflow: hidden;
+        transform: translateY(-50%);
+    }
+
+    /* Animation */
+    .anim-typewriter{
+        animation: typewriter 4s steps(60) 1s 1 normal both,
+        blinkTextCursor 500ms steps(60) infinite normal;
+    }
+    @keyframes typewriter{
+        from{width: 0;}
+        to{width: 35em;}
+    }
+    @keyframes blinkTextCursor{
+        from{border-right-color: rgba(255,255,255,.75);}
+        to{border-right-color: transparent;}
+    }
+
+</style>
+<!--style="margin-left: 200px"
+<div style=" margin-top: 330px;margin-left: 10px;position: absolute; opacity:1;" id="theLeftTitle">
+ <b>The Topics of Readings</b>
+</div>
+
+-->
+<!-- <div class="container" style="margin-left:5px;margin-top:40px;width: 600px;height: 600px;">
+  <section class="canvas" id="canvas" style="width: 600px;height: 600px;">
+  </section>
+</div>
+-->
+<div class="container">
+    <section class="canvas" id="canvas">
+    </section>
+</div>
+
+
+
+
+<script src="Replicater.js"></script>
+
+
+
+<link rel="stylesheet" href="Style.css">
+</body>
+</html>
