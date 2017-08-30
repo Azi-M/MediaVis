@@ -1,8 +1,9 @@
 fileUrl = "data/data_1.csv";
-var timeSpan = 2700;
-var delayFactor = 900;
-var LeavesTansitionSpeed = 300;
-
+//time changes August 2017
+var timeSpan =2000; //2700;
+var delayFactor =500; //900;
+var LeavesTansitionSpeed = 200;//300;
+//
 var outerWidth = document.getElementById('canvas').clientWidth;
 var outerHeight = document.getElementById('canvas').clientHeight;
 
